@@ -1,0 +1,153 @@
+@import "tailwindcss";
+@import "@fontsource/outfit/latin-400.css";
+@import "@fontsource/outfit/latin-ext-400.css";
+@import "@fontsource/outfit/latin-500.css";
+@import "@fontsource/outfit/latin-ext-500.css";
+@import "@fontsource/outfit/latin-600.css";
+@import "@fontsource/outfit/latin-ext-600.css";
+@import "@fontsource/ibm-plex-mono/latin-400.css";
+@import "@fontsource/ibm-plex-mono/latin-500.css";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-background: #07090c;
+  --color-foreground: #e8eef6;
+  --color-card: #10151c;
+  --color-field: #171e28;
+  --color-muted-foreground: #8b98a8;
+  --color-faint: #5d6b7c;
+  --color-border: #243040;
+  --color-accent: #9ec9e0;
+  --color-accent-foreground: #071016;
+  --color-primary: #e8eef6;
+  --color-primary-foreground: #071016;
+}
+
+:root {
+  --motion-quick: 150ms;
+  --motion-fast: 250ms;
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius-inset: 12px;
+  --radius-shell: 20px;
+  --radius-panel: 28px;
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+.safe-top {
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+}
+
+.safe-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+.wordmark {
+  letter-spacing: 0.18em;
+  font-weight: 500;
+}
+
+.panel {
+  border-radius: var(--radius-panel);
+  padding: 16px;
+}
+
+.shell {
+  border-radius: var(--radius-shell);
+  padding: 8px;
+}
+
+.inset {
+  border-radius: var(--radius-inset);
+}
+
+.arc-spin {
+  animation: jarvis-spin 72s linear infinite;
+}
+
+.status-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-faint),
+    var(--color-foreground),
+    var(--color-faint)
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: jarvis-shimmer 1.6s linear infinite;
+}
+
+.sheet-in {
+  animation: sheet-in var(--motion-fast) var(--ease-smooth-out);
+}
+
+@keyframes jarvis-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes jarvis-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-spin,
+  .status-shimmer,
+  .sheet-in {
+    animation: none;
+  }
+
+  .status-shimmer {
+    color: var(--color-muted-foreground);
+    background: none;
+  }
+}
